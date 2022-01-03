@@ -39,19 +39,19 @@ jobs:
             mv /tmp/docker/* /usr/bin
       - run:
          name: Build Docker image
-         command: docker build -t pvvsdoc001/test_docker_repo:$CIRCLE_SHA1 .
+         command: docker push pvvsdoc001/fast_api_with_circleci:$CIRCLE_SHA1 .
 
       - run:
           name: Push to DockerHub
           command: |
             docker login -u$DOCKERHUB_LOGIN -p$DOCKERHUB_PASSWORD
-            docker push pvvsdoc001/test_docker_repo:$CIRCLE_SHA1
+            docker push pvvsdoc001/fast_api_with_circleci:$CIRCLE_SHA1
       - run:
           name: Build and push Docker Image to Heroku
           command: |
             set -x
             curl https://cli-assets.heroku.com/install.sh | sh
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a pvvs-001 web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a pvvs-001 web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a circleci-fastapi web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a circleci-fastapi web
 
