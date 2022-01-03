@@ -1,0 +1,36 @@
+version: 2.1
+jobs:
+  deploy_to_heroku:
+    docker:
+      - image: python:3.8
+    steps:
+      - setup_remote_docker:
+          version: 20.10.6
+      - checkout
+      - run:
+            name: Install Docker client
+            command: |
+              set -x
+              VER="17.03.0-ce"
+              curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+              tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+              mv /tmp/docker/* /usr/bin
+      - run:
+          name: Build Image
+          command: |
+            curl https://cli-assets.heroku.com/install.sh | sh
+            make build-ml-api-heroku
+      - run:
+          name: Push Image to Heroku
+          command: |
+            # Push the built container to the Heroku image registry
+            make push-ml-api-heroku
+      - run:
+          name: Release to Heroku
+          command: |
+            make release-heroku
+
+workflows:
+  heroku_workflow:
+    jobs:
+      - deploy_to_heroku

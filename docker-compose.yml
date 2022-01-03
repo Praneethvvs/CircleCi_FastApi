@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  selenium:
+    image: selenium/standalone-chrome
+    ports:
+     - 4444:4444
+    restart: always
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 7000:7000
+    volumes:
+      - ./:/usr/app
+    command: ["python", "application.py"]
+    depends_on:
+      - selenuim
