@@ -67,5 +67,5 @@ def screenshot_test():
 def random_number_gen(_range:int):
     return {"status":"success","random_list":random.sample(list(range(1,_range)),20)}
 
-if __name__ == "__main__":
-    uvicorn.run("application:app", host="0.0.0.0", port=7000,lifespan="on",reload=True)
+# if __name__ == "__main__":
+#     uvicorn.run("application:app", host="0.0.0.0", port=7000,lifespan="on",reload=True)
