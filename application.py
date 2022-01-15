@@ -67,5 +67,9 @@ def screenshot_test():
 def random_number_gen(_range:int):
     return {"status":"success","random_list":random.sample(list(range(1,_range)),20)}
 
+@app.post("/square_of_a_number")
+def random_number_gen(number:int):
+    return {"status":"success","result":number**2}
+
 # if __name__ == "__main__":
 #     uvicorn.run("application:app", host="0.0.0.0", port=7000,lifespan="on",reload=True)
