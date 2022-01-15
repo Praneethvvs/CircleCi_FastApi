@@ -86,7 +86,7 @@ class ZipCorrection():
         result_df["new_col"] = result_df.apply(lambda x:myfun(x["City"],x["State"]),axis=1)
         result_df.to_excel("processed_3201-4250_result.xlsx")
 
-ZipCorrection().validation()
+# ZipCorrection().validation()
 
 
 
